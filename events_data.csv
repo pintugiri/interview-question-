@@ -1,0 +1,9 @@
+Client_ID,User_ID,Event_Type
+101,1,video call received
+101,2,video call sent
+202,3,voice call received
+202,4,voice call sent
+303,5,video call sent
+404,6,voice call received
+404,7,voice call sent
+404,8,video call received
