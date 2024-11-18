@@ -13,7 +13,7 @@ WITH cte AS (
         User_ID,
         COUNT(CASE WHEN Event_Type IN ('video call received', 'video call sent', 'voice call received', 'voice call sent') THEN 1 ELSE NULL END) AS event_cnt,
         COUNT(Event_Type) AS total_event_cnt
-    FROM LoanDB.events_data
+    FROM events_data
     GROUP BY Client_ID, User_ID
 ),
 cte2 AS (
@@ -45,7 +45,7 @@ FROM (
     SELECT
         customer_id,
         COUNT(user_type) AS desktop_user_cnt
-    FROM LoanDB.mixed_customer_data
+    FROM mixed_customer_data
     WHERE user_type = 'desktop'
     GROUP BY customer_id
     ORDER BY desktop_user_cnt DESC
@@ -64,7 +64,7 @@ WITH cte AS (
     SELECT
         customer_id,
         COUNT(event_type) AS numbers_of_events
-    FROM LoanDB.customer_event_data
+    FROM customer_event_data
     WHERE event_type = 'mobile'
     GROUP BY customer_id
 ),
@@ -97,7 +97,7 @@ FROM (
     SELECT
         user_id,
         COUNT(client_id) AS number_of_clients
-    FROM LoanDB.user_client_data
+    FROM user_client_data
     GROUP BY user_id
     HAVING number_of_clients = 1
 ) a
@@ -115,7 +115,7 @@ SELECT
     client_id,
     month,
     COUNT(DISTINCT user_id) AS unique_user_count
-FROM LoanDB.unique_user
+FROM unique_user
 GROUP BY client_id, month;
 ```
 
@@ -130,7 +130,7 @@ WITH user_month AS (
     SELECT
         user_id,
         SUBSTRING(time_id, 1, 7) AS month
-    FROM LoanDB.`events_data-2`
+    FROM `events_data-2`
     WHERE SUBSTRING(time_id, 1, 4) = '2020'
     GROUP BY user_id, month
 ),
