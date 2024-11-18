@@ -1,11 +1,10 @@
-# Meta Business Intelligence Analyst Interview Ans:
+# Microsoft 9 Data Analyst Interview Ans:
 
 
 ---
 
 ### 1) Most Popular Client ID
-Find the most popular `client_id` based on the number of users who have at least 50% of their events as **video/voice calls**.
-
+Select the most popular client_id based on a count of the number of users who have at least 50% of their events from the following list: 'video call received', 'video call sent', 'voice call received', 'voice call sent'. Dataset:evens_data.csv
 #### Query
 ```sql
 WITH cte AS (
@@ -36,7 +35,7 @@ LIMIT 1;
 ---
 
 ### 2) Desktop-Only Users
-Find the company (`customer_id`) with the highest number of users that use desktop exclusively.
+Write a query that returns the company (customer_id column) with the highest number of users that use desktop only.  Dataset: mixed_customer_data.csv
 
 #### Query
 ```sql
@@ -57,7 +56,7 @@ FROM (
 ---
 
 ### 3) Bottom Companies by Mobile Usage
-Identify the bottom 2 companies by mobile usage (events where `client_id` = 'mobile'). If there is a tie, return all companies with the same rank.
+Write a query that returns a list of the bottom 2 companies by mobile usage. Company is defined in the customer_id column. Mobile usage is defined as the number of events registered on a client_id == 'mobile'. Order the result by the number of events ascending. In the case where there are multiple companies tied for the bottom ranks (rank 1 or 2), return all the companies. Output the customer_id and number of events. Dataset  =  customer_event_data.csv
 
 #### Query
 ```sql
@@ -86,7 +85,8 @@ WHERE bottom_rank <= 2;
 ---
 
 ### 4) Exclusive Users per Client
-Return the number of users who are exclusive to only one client.
+Write a query that returns a number of users who are exclusive to only one client. Output the client_id and number of exclusive 
+dataset:user_client_data.csv
 
 #### Query
 ```sql
@@ -107,7 +107,7 @@ GROUP BY client_id;
 ---
 
 ### 5) Unique Users per Client per Month
-Calculate the number of unique users for each `client_id` per month.
+Write a query that returns the number of unique users per client per month. dataset:unique_user.csv
 
 #### Query
 ```sql
@@ -122,7 +122,7 @@ GROUP BY client_id, month;
 ---
 
 ### 6) Monthly User Share (New vs. Existing)
-Calculate the monthly share of **new** and **existing** users in the dataset.
+Calculate the share of new and existing users for each month in the table. Output the month, share of new users, and share of existing users as a ratio. New users are defined as users who started using services in the current month (there is no usage history in previous months). Existing users are users who used services in the current month but also used services in any previous month. Assume that the dates are all from the year 2020.
 
 #### Query
 ```sql
@@ -131,7 +131,7 @@ WITH user_month AS (
         user_id,
         SUBSTRING(time_id, 1, 7) AS month
     FROM LoanDB.`events_data-2`
-    WHERE SUBSTRING(time_id, 1, 4) = '2024'
+    WHERE SUBSTRING(time_id, 1, 4) = '2020'
     GROUP BY user_id, month
 ),
 first_month AS (
